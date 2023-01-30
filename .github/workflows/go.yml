@@ -24,7 +24,6 @@ jobs:
 
     - name: Build
       run: go build -v ./...
-      cache: true
 
     - name: Test
       run: go test -v ./...
