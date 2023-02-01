@@ -40,13 +40,13 @@ func main() {
 		testAPI.Post("/update", updateRequestById)
 	}
 
-	port := ":3000"
+	port := os.Getenv("PORT")
 
-	if os.Getenv("PORT") != "" {
-		port = os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
 	}
 
-	app.Listen(port)
+	app.Listen(":" + port)
 }
 
 func healthcheck(ctx iris.Context) {
