@@ -40,3 +40,21 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+  deploy-develop:
+    if: github.ref == 'refs/heads/develop'
+    needs: build
+    steps:
+      - name: Deploy to Heroku
+        uses: gonuit/heroku-docker-deploy@v1.3.2
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          docker_options: "--no-cache"
+
+          # (Optional, default: "web")
+          # Select the process type for which you want the docker container to be uploaded.
+          # By default, this argument is set to "web".
+          # For more information look at https://devcenter.heroku.com/articles/process-model
+          process_type: web
