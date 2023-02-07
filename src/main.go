@@ -2,6 +2,7 @@ package main
 
 import (
 	"ci-cd-practice/src/modules/request"
+	"os"
 
 	"github.com/kataras/iris/v12"
 )
@@ -39,7 +40,13 @@ func main() {
 		testAPI.Post("/update", updateRequestById)
 	}
 
-	app.Listen(":3000")
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "3000"
+	}
+
+	app.Listen(":" + port)
 }
 
 func healthcheck(ctx iris.Context) {
